@@ -1,5 +1,5 @@
 import { Link, useRouter } from "expo-router";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { Button, Card, TextInput, useTheme } from "react-native-paper";
 
 
@@ -17,7 +17,7 @@ export default function PersonalDetails() {
 
 
     return (
-        <View style={{ gap: 15 }}>
+        <ScrollView contentContainerStyle={{ gap: 25 }} showsVerticalScrollIndicator={false}>
             <Card style={{ backgroundColor: theme.colors.background }}>
 
                 <Card.Title title="Personal Details" titleVariant="titleLarge" />
@@ -39,6 +39,6 @@ export default function PersonalDetails() {
 
             </Card>
             <Button mode="contained" onPress={nextPage}>Next</Button>
-        </View>
+        </ScrollView>
     )
 }

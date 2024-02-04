@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
 export default function PaymentDetails() {
@@ -11,9 +11,9 @@ export default function PaymentDetails() {
 
 
     return (
-        <View>
+        <ScrollView contentContainerStyle={{ gap: 25 }} showsVerticalScrollIndicator={false}>
             <Text>Payment</Text>
             <Button mode="contained" onPress={nextPage}>Submit</Button>
-        </View>
+        </ScrollView>
     )
 }
