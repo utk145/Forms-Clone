@@ -4,6 +4,7 @@ import { Button, Card, HelperText, TextInput, useTheme } from "react-native-pape
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalInfoSchema, PersonalInfo } from "../../src/schema/checkout.schema";
+import ControllerComp from "../../src/components/Controller.Component";
 
 
 export default function PersonalDetails() {
@@ -35,33 +36,18 @@ export default function PersonalDetails() {
 
                 <Card.Content style={{ gap: 15 }} >
 
-
-
-                    <Controller
+                    <ControllerComp
                         control={control}
                         name="name"
-                        render={({ field: { value, onChange, onBlur }, fieldState: { error, invalid } }) => (
-                            <>
-                                <TextInput placeholder="John Doe"
-                                    label={"Name"}
-                                    // style={{ backgroundColor: "white" }}
-                                    style={{ backgroundColor: theme.colors.background }}
-                                    value={value}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                    error={invalid}
-                                />
-                                <HelperText type="error" visible={invalid}>
-                                    {error?.message}
-                                </HelperText>
-                            </>
-                        )}
-
+                        labelName="Name"
+                        inputPlaceholder="John Doe"
                     />
 
-                    <TextInput placeholder="follow-utk145@github.com"
-                        label={"Email"}
-                        style={{ backgroundColor: "white" }}
+                    <ControllerComp
+                        control={control}
+                        name="email"
+                        labelName="Email"
+                        inputPlaceholder="follow-utk145@github.com"
                     />
 
                 </Card.Content>
