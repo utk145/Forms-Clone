@@ -26,18 +26,9 @@
 import { z as zodInstance } from "zod";
 
 
-const PersonalInfoSchema = zodInstance.object({
+export const PersonalInfoSchema = zodInstance.object({
     name: zodInstance.string().min(5),
     email: zodInstance.string().email({ message: "Please enter a valid email address" }),
 })
 
-type PersonalInfo = zodInstance.infer<typeof PersonalInfoSchema>
-
-const info: PersonalInfo = PersonalInfoSchema.parse(
-    {
-        name: "Lu",
-        email: "dotyh@alo.com"
-    }
-)
-
-console.log(info);
+export type PersonalInfo = zodInstance.infer<typeof PersonalInfoSchema>
