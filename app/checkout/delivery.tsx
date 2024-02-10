@@ -1,7 +1,6 @@
-import { Link, useRouter } from "expo-router";
-import { useState } from "react";
-import { Text, View, ScrollView } from "react-native";
-import { Button, Card, TextInput, useTheme, RadioButton, HelperText } from "react-native-paper";
+import {  useRouter } from "expo-router";
+import { ScrollView } from "react-native";
+import { Button, Card, useTheme, RadioButton, HelperText } from "react-native-paper";
 import { Controller, useForm } from "react-hook-form";
 import { DeliveryInfo, DeliveryInfoSchema } from "../../src/schema/checkout.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,8 +31,7 @@ export default function DeliveryDetails() {
 
     const theme = useTheme()
 
-    // const [shipping, setShipping] = useState('free');
-    // console.log(shipping);
+
 
     return (
 

@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { ScrollView } from "react-native";
-import { Button, Card, Checkbox, Text, TextInput, useTheme } from "react-native-paper";
+import { Button, Card, Checkbox, TextInput, useTheme } from "react-native-paper";
 import { DatePickerInput } from 'react-native-paper-dates';
 import { useState } from "react";
 

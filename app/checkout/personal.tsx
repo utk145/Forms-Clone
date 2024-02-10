@@ -1,7 +1,7 @@
-import { Link, useRouter } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
-import { Button, Card, HelperText, TextInput, useTheme } from "react-native-paper";
-import { Controller, useForm } from "react-hook-form";
+import { useRouter } from "expo-router";
+import { ScrollView } from "react-native";
+import { Button, Card, useTheme } from "react-native-paper";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalInfoSchema, PersonalInfo } from "../../src/schema/checkout.schema";
 import ControllerComp from "../../src/components/Controller.Component";
