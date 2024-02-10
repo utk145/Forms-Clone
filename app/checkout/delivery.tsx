@@ -1,22 +1,42 @@
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View, ScrollView } from "react-native";
-import { Button, Card, TextInput, useTheme, RadioButton } from "react-native-paper";
+import { Button, Card, TextInput, useTheme, RadioButton, HelperText } from "react-native-paper";
+import { Controller, useForm } from "react-hook-form";
+import { DeliveryInfo, DeliveryInfoSchema } from "../../src/schema/checkout.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import ControllerComp from "../../src/components/Controller.Component";
+
 
 export default function DeliveryDetails() {
 
+    const {
+        control,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<DeliveryInfo>(
+        {
+            resolver: zodResolver(DeliveryInfoSchema),
+            defaultValues: { shippingOptions: "free" }
+        }
+    );
+
+    console.log(errors);
+
+
     const router = useRouter()
-    const nextPage = () => {
+    const nextPage = (data: any) => {
+        console.log(data);
         router.push("/checkout/payment")
     }
 
     const theme = useTheme()
 
-    const [shipping, setShipping] = useState('free');
+    // const [shipping, setShipping] = useState('free');
     // console.log(shipping);
 
     return (
-        // <View style={{ gap: 25 }}>
+
         <ScrollView contentContainerStyle={{ gap: 25 }} showsVerticalScrollIndicator={false}>
             <Card style={{ backgroundColor: theme.colors.background }}>
 
@@ -24,19 +44,22 @@ export default function DeliveryDetails() {
 
                 <Card.Content style={{ gap: 15 }} >
 
-                    <TextInput
-                        label={"City"}
-                        style={{ backgroundColor: theme.colors.background }}
+                    <ControllerComp
+                        control={control}
+                        name="city"
+                        labelName="City"
                     />
 
-                    <TextInput
-                        label={"Postal Code"}
-                        style={{ backgroundColor: theme.colors.background }}
+                    <ControllerComp
+                        control={control}
+                        labelName={"Postal Code"}
+                        name="postalCode"
                     />
 
-                    <TextInput
-                        label={"Address"}
-                        style={{ backgroundColor: theme.colors.background }}
+                    <ControllerComp
+                        control={control}
+                        labelName={"Address"}
+                        name="address"
                     />
 
                 </Card.Content>
@@ -50,17 +73,33 @@ export default function DeliveryDetails() {
                 <Card.Title title="Shipping Options" titleVariant="titleLarge" />
 
                 <Card.Content style={{ gap: 15 }} >
-                    <RadioButton.Group value={shipping} onValueChange={(val) => setShipping(val)}>
-                        <RadioButton.Item value="free" label="Free" />
-                        <RadioButton.Item value="fast" label="Fast" />
-                        <RadioButton.Item value="same_day" label="Same day" />
-                    </RadioButton.Group>
+                    <Controller
+                        control={control}
+                        name="shippingOptions"
+                        render={
+                            ({
+                                field: { onChange, value },
+                                fieldState: { error, invalid }
+                            }) => (
+                                <>
+                                    <RadioButton.Group value={value}
+                                        onValueChange={(val) => onChange(val)}>
+                                        <RadioButton.Item value="free" label="Free" />
+                                        <RadioButton.Item value="fast" label="Fast" />
+                                        <RadioButton.Item value="same_day" label="Same day" />
+                                    </RadioButton.Group>
+                                    <HelperText type="error" visible={invalid}>
+                                        {error?.message}
+                                    </HelperText>
+                                </>
+                            )}
+                    />
                 </Card.Content>
 
             </Card>
 
 
-            <Button mode="contained" onPress={nextPage}>Next</Button>
+            <Button mode="contained" onPress={handleSubmit(nextPage)}>Next</Button>
 
         </ScrollView >
     )

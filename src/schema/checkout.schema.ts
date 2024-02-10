@@ -26,9 +26,24 @@
 import { z as zodInstance } from "zod";
 
 
+// Personal info schema
 export const PersonalInfoSchema = zodInstance.object({
     name: zodInstance.string().min(5),
     email: zodInstance.string().email({ message: "Please enter a valid email address" }),
 })
 
 export type PersonalInfo = zodInstance.infer<typeof PersonalInfoSchema>
+
+
+
+
+
+// Delivery info schema
+export const DeliveryInfoSchema = zodInstance.object({
+    city: zodInstance.string().min(1),
+    postalCode: zodInstance.string(),
+    address: zodInstance.string(),
+    shippingOptions: zodInstance.enum(["free", "fast", "same_day"])
+});
+
+export type DeliveryInfo = zodInstance.infer<typeof DeliveryInfoSchema>

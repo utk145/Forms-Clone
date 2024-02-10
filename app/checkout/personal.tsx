@@ -17,7 +17,7 @@ export default function PersonalDetails() {
     console.log(errors);
 
     const router = useRouter()
-    const nextPage = (data) => {
+    const nextPage = (data: any) => {
         console.log(data);
         router.push("/checkout/delivery")
     }
