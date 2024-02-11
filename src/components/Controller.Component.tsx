@@ -6,9 +6,9 @@ type ControllerInputProps = {
     name: string,
     labelName: string,
     inputPlaceholder?: string,
-};
+} & React.ComponentProps<typeof TextInput>;
 
-export default function ControllerComp({ control, name, labelName, inputPlaceholder }: ControllerInputProps) {
+export default function ControllerComp({ control, name, labelName, inputPlaceholder, ...textinputProps }: ControllerInputProps) {
 
 
     return (
@@ -21,7 +21,8 @@ export default function ControllerComp({ control, name, labelName, inputPlacehol
                     fieldState: { error, invalid }
                 }) => (
                     <>
-                        <TextInput placeholder={inputPlaceholder}
+                        <TextInput {...textinputProps}
+                            placeholder={inputPlaceholder}
                             label={labelName}
                             style={{ backgroundColor: useTheme().colors.background }}
                             value={value}

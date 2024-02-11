@@ -47,3 +47,17 @@ export const DeliveryInfoSchema = zodInstance.object({
 });
 
 export type DeliveryInfo = zodInstance.infer<typeof DeliveryInfoSchema>
+
+
+
+
+
+// Payment info schema
+export const PaymentInfoSchema = zodInstance.object({
+    cardNumber: zodInstance.string(),
+    expiryDate: zodInstance.string(),
+    securityCode: zodInstance.string(),
+    saveInfo: zodInstance.boolean()
+});
+
+export type PaymentInfo = zodInstance.infer<typeof PaymentInfoSchema>;

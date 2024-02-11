@@ -1,13 +1,22 @@
 import { useRouter } from "expo-router";
 import { ScrollView } from "react-native";
-import { Button, Card, Checkbox, TextInput, useTheme } from "react-native-paper";
+import { Button, Card, Checkbox, HelperText, TextInput, useTheme } from "react-native-paper";
 import { DatePickerInput } from 'react-native-paper-dates';
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { PaymentInfo, PaymentInfoSchema } from "../../src/schema/checkout.schema";
+import ControllerComp from "../../src/components/Controller.Component";
 
 export default function PaymentDetails() {
 
+    const { control, handleSubmit } = useForm<PaymentInfo>({
+        resolver: zodResolver(PaymentInfoSchema)
+    })
+
     const router = useRouter()
-    const nextPage = () => {
+    const nextPage = (data:any) => {
+        console.log(data);        
         router.push("/")
     }
 
@@ -21,20 +30,21 @@ export default function PaymentDetails() {
             <Card style={{ backgroundColor: useTheme().colors.background }}>
                 <Card.Title title='Payment Details' titleVariant="titleLarge" />
                 <Card.Content style={{ gap: 15 }}>
-                    <TextInput
-                        label={"Card Number"}
-                        style={{ backgroundColor: useTheme().colors.background }}
-                        placeholder="XXX3 XXXX 75XX 0X3"
-                        // placeholder="XXXX XXXX XXXX XXX"
+                    <ControllerComp
+                        control={control}
+                        name="cardNumber"
+                        labelName={"Card Number"}
+                        inputPlaceholder="XXX3 XXXX 75XX 0X3"
                         placeholderTextColor={"#778899"}
                     />
-                    {/* <TextInput
-                        label={"Expiration date"}
-                        placeholder="mm/yyy"
-                        style={{ backgroundColor: useTheme().colors.background }}
-                    /> */}
+                    <ControllerComp
+                        control={control}
+                        name="expiryDate"
+                        labelName={"Expiration date"}
+                        inputPlaceholder="mm/yyy"
+                    />
 
-                    <DatePickerInput
+                    {/* <DatePickerInput
                         locale="en"
                         label="Card Expiry"
                         value={inputDate}
@@ -43,9 +53,11 @@ export default function PaymentDetails() {
                         animationType="slide"
                         iconSize={35}
                         style={{ backgroundColor: useTheme().colors.background }}
-                    />
-                    <TextInput
-                        label={"CVV"}
+                    /> */}
+                    <ControllerComp
+                        control={control}
+                        name="securityCode"
+                        labelName={"CVV"}
                         style={{ backgroundColor: useTheme().colors.background }}
                     />
 
@@ -59,21 +71,38 @@ export default function PaymentDetails() {
                         <Text>Save payment information</Text>
 
                     */}
+                    <Controller
+                        control={control}
+                        name="saveInfo"
+                        render={
+                            (
+                                {
+                                    field: { name, onChange, value },
+                                    fieldState: { invalid, error }
+                                }
+                            ) => (
+                                <>
+                                    <Checkbox.Item
+                                        label="Save payment information"
+                                        status={value ? "checked" : "unchecked"}
+                                        color="green"
+                                        onPress={() => onChange(!value)}
+                                        uncheckedColor="purple"
+                                        position="trailing"
+                                        mode="android"
+                                    />
+                                    <HelperText type="error" visible={invalid}>
+                                        {error?.message}
+                                    </HelperText>
+                                </>
+                            )}
 
-                    <Checkbox.Item
-                        label="Save payment information"
-                        status={isChecked ? "checked" : "unchecked"}
-                        color="green"
-                        onPress={() => setIsChecked(!isChecked)}
-                        uncheckedColor="purple"
-                        position="trailing"
-                        mode="android"
                     />
 
                 </Card.Content>
             </Card>
 
-            <Button mode="contained" onPress={nextPage}>Submit</Button>
+            <Button mode="contained" onPress={handleSubmit(nextPage)}>Submit</Button>
 
         </ScrollView>
     )
