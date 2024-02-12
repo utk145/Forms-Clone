@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { DeliveryInfo, DeliveryInfoSchema } from "../../src/schema/checkout.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ControllerComp from "../../src/components/Controller.Component";
+import { useCheckoutContext } from "../../src/context/checkout.context";
 
 
 export default function DeliveryDetails() {
@@ -23,9 +24,12 @@ export default function DeliveryDetails() {
     console.log(errors);
 
 
+    const {setDelivery} = useCheckoutContext()
+
     const router = useRouter()
-    const nextPage = (data: any) => {
+    const nextPage = (data: DeliveryInfo) => {
         console.log(data);
+        setDelivery(data);
         router.push("/checkout/payment")
     }
 

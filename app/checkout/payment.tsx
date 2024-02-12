@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { ScrollView } from "react-native";
+import { Alert, ScrollView } from "react-native";
 import { Button, Card, Checkbox, HelperText, TextInput, useTheme } from "react-native-paper";
 import { DatePickerInput } from 'react-native-paper-dates';
 import { useState } from "react";
@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { PaymentInfo, PaymentInfoSchema } from "../../src/schema/checkout.schema";
 import ControllerComp from "../../src/components/Controller.Component";
+import { useCheckoutContext } from "../../src/context/checkout.context";
 
 export default function PaymentDetails() {
 
@@ -14,10 +15,18 @@ export default function PaymentDetails() {
         resolver: zodResolver(PaymentInfoSchema)
     })
 
+    const { setPayment, onSubmitAll } = useCheckoutContext();
+
     const router = useRouter()
-    const nextPage = (data:any) => {
-        console.log(data);        
-        router.push("/")
+    const nextPage = async (data: PaymentInfo) => {
+        // console.log(data);   
+        // setPayment(data);
+        const success = await onSubmitAll(data);
+        if (success) {
+            router.push("/")
+        } else {
+            Alert.alert("Something went wrong while submitting the form")
+        }
     }
 
     // const [inputDate, setInputDate] = useState(undefined)

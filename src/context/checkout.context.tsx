@@ -1,13 +1,42 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
+import { DeliveryInfo, PaymentInfo, PersonalInfo } from "../schema/checkout.schema";
 
 
-type CheckoutContextType = {};
+type CheckoutContextType = {
+    setPersonal: React.Dispatch<React.SetStateAction<PersonalInfo | null>>,
+    setDelivery: React.Dispatch<React.SetStateAction<DeliveryInfo | null>>,
+    setPayment: React.Dispatch<React.SetStateAction<PaymentInfo | null>>,
+    onSubmitAll: (paymentInformation: PaymentInfo) => Promise<boolean>,
+};
 
-const CheckoutContext = createContext<CheckoutContextType>({});
+const CheckoutContext = createContext<CheckoutContextType>({
+    setPayment: () => { },
+    setPersonal: () => { },
+    setDelivery: () => { },
+    onSubmitAll: () => Promise.resolve(false)
+});
 
 export default function CheckoutContextProvider({ children }) {
+
+    const [personal, setPersonal] = useState<PersonalInfo | null>(null);
+    const [delivery, setDelivery] = useState<DeliveryInfo | null>(null);
+    const [payment, setPayment] = useState<PaymentInfo | null>(null);
+
+
+    const onSubmitAll = async (paymentInformation: PaymentInfo) => {
+        setPayment(paymentInformation);
+
+        console.log("Submitting the multi-step form");
+        console.log("personal", personal);
+        console.log("delivery", delivery);
+        console.log("payment", payment);
+        console.log("paymentInfo", paymentInformation);
+
+        return true;
+    };
+
     return (
-        <CheckoutContext.Provider value={{ test: "abc_________tsting______owytow" }}>
+        <CheckoutContext.Provider value={{ setDelivery, setPersonal, setPayment, onSubmitAll }}>
             {children}
         </CheckoutContext.Provider>
     )

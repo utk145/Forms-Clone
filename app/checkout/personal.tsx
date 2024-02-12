@@ -17,13 +17,14 @@ export default function PersonalDetails() {
     );
     console.log(errors);
 
-    const { test } = useCheckoutContext();
-    console.log(test);
+    const { setPersonal } = useCheckoutContext();
+    // console.log(setPersonal);
     
 
     const router = useRouter()
-    const nextPage = (data: any) => {
+    const nextPage = (data: PersonalInfo) => {
         console.log(data);
+        setPersonal(data);
         router.push("/checkout/delivery")
     }
 
