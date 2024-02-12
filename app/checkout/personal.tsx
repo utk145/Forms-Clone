@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalInfoSchema, PersonalInfo } from "../../src/schema/checkout.schema";
 import ControllerComp from "../../src/components/Controller.Component";
+import { useCheckoutContext } from "../../src/context/checkout.context";
 
 
 export default function PersonalDetails() {
@@ -15,6 +16,10 @@ export default function PersonalDetails() {
         }
     );
     console.log(errors);
+
+    const { test } = useCheckoutContext();
+    console.log(test);
+    
 
     const router = useRouter()
     const nextPage = (data: any) => {

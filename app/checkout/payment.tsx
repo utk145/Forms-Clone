@@ -20,8 +20,8 @@ export default function PaymentDetails() {
         router.push("/")
     }
 
-    const [inputDate, setInputDate] = useState(undefined)
-    const [isChecked, setIsChecked] = useState(false)
+    // const [inputDate, setInputDate] = useState(undefined)
+    // const [isChecked, setIsChecked] = useState(false)
 
     return (
         <ScrollView
