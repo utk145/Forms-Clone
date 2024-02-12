@@ -24,7 +24,7 @@ export default function CheckoutContextProvider({ children }) {
 
 
     const onSubmitAll = async (paymentInformation: PaymentInfo) => {
-        setPayment(paymentInformation);
+        // setPayment(paymentInformation);
 
         console.log("Submitting the multi-step form");
         console.log("personal", personal);
