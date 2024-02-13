@@ -28,8 +28,14 @@ import { z as zodInstance } from "zod";
 
 // Personal info schema
 export const PersonalInfoSchema = zodInstance.object({
-    name: zodInstance.string().min(5),
-    email: zodInstance.string().email({ message: "Please enter a valid email address" }),
+    name: zodInstance.string({
+        required_error: "Name is required"
+    }).min(5),
+    email: zodInstance.string({
+        required_error: "Email is required"
+    }).email({
+        message: "Please enter a valid email address"
+    }),
 })
 
 export type PersonalInfo = zodInstance.infer<typeof PersonalInfoSchema>
@@ -56,8 +62,15 @@ export type DeliveryInfo = zodInstance.infer<typeof DeliveryInfoSchema>
 export const PaymentInfoSchema = zodInstance.object({
     cardNumber: zodInstance.string(),
     expiryDate: zodInstance.string(),
-    securityCode: zodInstance.string(),
+    securityCode: zodInstance.string().length(3, {
+        message: "Security code must be 3 digit"
+    }),
     saveInfo: zodInstance.boolean()
 });
 
 export type PaymentInfo = zodInstance.infer<typeof PaymentInfoSchema>;
+
+
+export const CheckoutInfoSchemma = PersonalInfoSchema.merge(DeliveryInfoSchema).merge(PaymentInfoSchema);
+
+export type CheckoutData = zodInstance.infer<typeof CheckoutInfoSchemma>

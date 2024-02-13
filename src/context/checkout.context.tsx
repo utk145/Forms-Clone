@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { DeliveryInfo, PaymentInfo, PersonalInfo } from "../schema/checkout.schema";
+import { CheckoutData, DeliveryInfo, PaymentInfo, PersonalInfo } from "../schema/checkout.schema";
 
 
 type CheckoutContextType = {
@@ -26,11 +26,14 @@ export default function CheckoutContextProvider({ children }) {
     const onSubmitAll = async (paymentInformation: PaymentInfo) => {
         // setPayment(paymentInformation);
 
+        const checkoutData: CheckoutData = { ...personal, ...delivery, ...payment }
+
         console.log("Submitting the multi-step form");
-        console.log("personal", personal);
-        console.log("delivery", delivery);
-        console.log("payment", payment);
-        console.log("paymentInfo", paymentInformation);
+        // console.log("personal", personal);
+        // console.log("delivery", delivery);
+        // console.log("payment", payment);
+        // console.log("paymentInfo", paymentInformation);
+        console.log("checkoutData", checkoutData);
 
         return true;
     };
