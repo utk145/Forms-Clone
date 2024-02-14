@@ -50,7 +50,7 @@ export default function PaymentDetails() {
                         control={control}
                         name="expiryDate"
                         labelName={"Expiration date"}
-                        inputPlaceholder="mm/yyy"
+                        inputPlaceholder="mm/yyyy"
                     />
 
                     {/* <DatePickerInput
